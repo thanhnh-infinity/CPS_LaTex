@@ -137,15 +137,14 @@ New Mexico State University \\ % Your institution for the title page
 	\frametitle{Physical CPS System}
 	\begin{definition}
 		\label{def:physical_CPS_system} 
-		A physical CPS system $S$ is a tuple ($C, A, F, R, Prob$) where:
+		A physical CPS system $S$ is a tuple ($C, A, F, R$) where:
 		%
 		\begin{list}{$\bullet$}{\itemsep=0pt \parsep=1pt \topsep=1pt \leftmargin=12pt} 
 			\item $C$ is a set of physical components.
-			\item $A$ is a finite set of actions that can be execute over CPS system.
+			\item $A$ is a set of tuples ($a_i$, $prob_{a_i}$), where $a_i$ is an action which can be executed on the CPS, and $prob_{a_i}$ is the probability of success of the action $a_i$. ($0 \leq prob_{a_i} \leq 100$) or $prob_{a_i} = $ None if the probability is unknown. A successful action modifies the current state, an unsuccessful action has no affect.
 			\item $F$ is a finite set of fluent literals.
 			\item $R$ is a set of relations that map each physical component $c \in C$ with a set of physical component properties that are defined in CPS Ontology.  \\
-			For any $r \in R$, $r : C \longrightarrow 2^{P}$. $P$ is set of all properties that are defined in CPS ontology. 
-			\item $Pr$ is a set of probabilities of success of actions. Given an action $a \in A$, there is a probability of success of action $a$ denoted by $prob(a) \in Prob$. The value of $prob(a)$ can be $None$ if the probability of success of $a$ is unknown. $Prob = \{prob(a) | a \in A\}$			 
+			For any $r \in R$, $r : C \longrightarrow 2^{P}$. $P$ is set of all properties that are defined in CPS ontology. 	 
 		\end{list}
 		%
 	\end{definition}
@@ -154,21 +153,21 @@ New Mexico State University \\ % Your institution for the title page
 \begin{frame}[fragile]
 	\frametitle{Representation the System}
 	\begin{itemize}
-		\item {\bf Step 1}: Representation the probability of success of action. The fluent {\tt prob\_success(a,$prob_a$)} denotes that an action $a$ has probability $prob_a$ ($0 \leq prob_a \leq 100$).
-		\item {\bf Step 2}: The fluent {\tt prob\_of\_state(prob)} models the propagation by the model to the successor state. The statement {\tt holds(prob\_of\_state(prob),S)} means that at step $S$ of the CPS evolution, the probability of the current state described by this fluent is $prob$ ($0 \leq prob \leq 100$). The initial value at time step 0 is {\tt holds(prob\_of\_state(100),0)} or {\tt prob\_of\_state(0)} = 100.
-		\item {\bf Step 3}: Assuming that at step $S$ of evolution, an action $a$ can be executed. The predicate {\tt do(a,S)} denotes that action $a$ is executed at step $S$.
+		\item {\bf Step 1}: Represent the probability of success of action. The fluent {\tt prob\_success($a_i$,$prob_{a_i}$)} denotes that an action $a_i$ has probability $prob_{a_i}$ ($0 \leq prob_{a_i} \leq 100$).
+		\item {\bf Step 2}: The fluent {\tt prob\_of\_state($prob_s$)} models the propagation by the model to the successor state. The statement {\tt holds(prob\_of\_state($prob_s$),S)} means that at step $S$ of the CPS evolution, the probability of the current state described by this fluent is $prob_s$ ($0 \leq prob_s \leq 100$). The initial value at time step 0 is {\tt holds(prob\_of\_state(100),0)} or {\tt prob\_of\_state(0)} = 100.
+		\item {\bf Step 3}: Assuming that at step $S$ of evolution, an action $a_i$ can be executed. The predicate {\tt do($a_i$,S)} denotes that action $a_i$ is executed at step $S$.
 	\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
 	\frametitle{Compute the Probability of success of mitigation strategies}
 	\begin{itemize}
-		\item {\bf Step 4}: (1) Given the probability of success of mitigation strategies in CPS System at step $S$ : {\tt prob\_of\_state(S)}. (2) At step $S$, an action $a$ is executed ({\tt do(a,S)} holds) and the probability of success of $a$ is {\tt prob\_success(a)}. So the probability of success of CPS system at step $S + 1$ is:
+		\item {\bf Step 4}: (1) Given the probability of success of mitigation strategies in CPS System at step $S$ : {\tt prob\_of\_state(S)}. (2) At step $S$, an action $a_i$ is executed ({\tt do($a_i$,S)} holds) and the probability of success of $a_i$ is {\tt prob\_success($a_i$)}. So the probability of success of CPS system at step $S + 1$ is:
 		$$
 			prob\_of\_state(S+1) = 
 			\begin{cases}
-			\dfrac{prob\_of\_state(S)*prob\_success(a)}{100}, \\ \text{ if } prob\_success(a) \neq None \\
-			prob\_of\_state(S), \text{ if } prob\_success(a) = None 
+			\dfrac{prob\_of\_state(S)*prob\_success(a_i)}{100}, \\ \text{ if } prob\_success(a_i) \neq None \\
+			prob\_of\_state(S), \text{ if } prob\_success(a_i) = None 
 			\end{cases} 
 		$$
 		\item {\bf Step 5}: Finally, assume that $S_{last}$ is the last step of system evolution, the value of {\tt prob\_of\_state($S_{last}$)} represents the probability of success of mitigation strategy $\alpha = a_0...a_{S_{last}}$
