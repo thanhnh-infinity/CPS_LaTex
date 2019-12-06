@@ -1,0 +1,190 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass{beamer}
+
+\mode<presentation> {
+
+% The Beamer class comes with a number of default slide themes
+% which change the colors and layouts of slides. Below this is a list
+% of all the themes, uncomment each in turn to see what they look like.
+
+%\usetheme{default}
+%\usetheme{AnnArbor}
+%\usetheme{Antibes}
+%\usetheme{Bergen}
+%\usetheme{Berkeley}
+%\usetheme{Berlin}
+%\usetheme{Boadilla}
+%\usetheme{CambridgeUS}
+%\usetheme{Copenhagen}
+%\usetheme{Darmstadt}
+%\usetheme{Dresden}
+%\usetheme{Frankfurt}
+%\usetheme{Goettingen}
+%\usetheme{Hannover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+\usetheme{Madrid}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+%\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+
+% As well as themes, the Beamer class has a number of color themes
+% for any slide theme. Uncomment each of these in turn to see how it
+% changes the colors of your current slide theme.
+
+%\usecolortheme{albatross}
+%\usecolortheme{beaver}
+%\usecolortheme{beetle}
+%\usecolortheme{crane}
+%\usecolortheme{dolphin}
+%\usecolortheme{dove}
+%\usecolortheme{fly}
+%\usecolortheme{lily}
+%\usecolortheme{orchid}
+%\usecolortheme{rose}
+%\usecolortheme{seagull}
+%\usecolortheme{seahorse}
+%\usecolortheme{whale}
+%\usecolortheme{wolverine}
+
+%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
+%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+
+%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+}
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+
+\usepackage{listings}
+\lstdefinelanguage{clingo}{
+  keywordstyle=[1]\usefont{OT1}{cmtt}{m}{n},%
+  keywordstyle=[2]\textbf,%
+  keywordstyle=[3]\usefont{OT1}{cmtt}{m}{n},%\textit
+  alsoletter={\#,\&},%
+  keywords=[1]{not,from,import,exists,if,else,return,while,break,and,or,for,in,del,and,class,subclass,operation,has_input,has_output,input_spec,output_spec,init,occ,map,score,failed,succ,type},%
+  keywords=[2]{\#const,\#show,\#minimize,\#base,\#theory,\#count,\#external,\#program,\#script,\#end,\#heuristic,\#edge,\#project,\#show},%
+  keywords=[3]{&,&dom,&sum,&diff,&show,&minimize},%
+  morecomment=[l]{\#\ },%
+  morecomment=[l]{\%\ },%
+  commentstyle={\color{darkgray}}%
+}
+\lstset{numberblanklines=false,basicstyle=\ttfamily\small,language=clingo}
+\lstset{escapeinside={*@}{@*}}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[Truthworthiness value]{Probabilistic Mitigation Strategies} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\author{Thanh H. Nguyen} % Your name
+\institute[NMSU] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+New Mexico State University \\ % Your institution for the title page
+\medskip
+\textit{tnguyen@cs.nmsu.edu} % Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+% Slide 1:
+
+%\begin{frame}
+%\frametitle{Overview} % Table of contents slide, comment this block out to remove it
+%\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+%\end{frame}
+
+%----------------------------------------------------------------------------------------
+%	PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+%------------------------------------------------
+\section{Introduction} 
+
+\begin{frame}
+	\frametitle{Physical CPS System}
+	\begin{definition}
+		\label{def:physical_CPS_system} 
+		A physical CPS system $S$ is a tuple ($C, A, F, R, Prob$) where:
+		%
+		\begin{list}{$\bullet$}{\itemsep=0pt \parsep=1pt \topsep=1pt \leftmargin=12pt} 
+			\item $C$ is a set of physical components.
+			\item $A$ is a finite set of actions that can be execute over CPS system.
+			\item $F$ is a finite set of fluent literals.
+			\item $R$ is a set of relations that map each physical component $c \in C$ with a set of physical component properties that are defined in CPS Ontology.  \\
+			For any $r \in R$, $r : C \longrightarrow 2^{P}$. $P$ is set of all properties that are defined in CPS ontology. 
+			\item $Pr$ is a set of probabilities of success of actions. Given an action $a \in A$, there is a probability of success of action $a$ denoted by $prob(a) \in Prob$. The value of $prob(a)$ can be $None$ if the probability of success of $a$ is unknown. $Prob = \{prob(a) | a \in A\}$			 
+		\end{list}
+		%
+	\end{definition}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Representation the System}
+	\begin{itemize}
+		\item {\bf Step 1}: Representation the probability of success of action. The fluent {\tt prob\_success(a,$prob_a$)} denotes that an action $a$ has probability $prob_a$ ($0 \leq prob_a \leq 100$).
+		\item {\bf Step 2}: The fluent {\tt prob\_of\_state(prob)} models the propagation by the model to the successor state. The statement {\tt holds(prob\_of\_state(prob),S)} means that at step $S$ of the CPS evolution, the probability of the current state described by this fluent is $prob$ ($0 \leq prob \leq 100$). The initial value at time step 0 is {\tt holds(prob\_of\_state(100),0)} or {\tt prob\_of\_state(0)} = 100.
+		\item {\bf Step 3}: Assuming that at step $S$ of evolution, an action $a$ can be executed. The predicate {\tt do(a,S)} denotes that action $a$ is executed at step $S$.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Compute the Probability of success of mitigation strategies}
+	\begin{itemize}
+		\item {\bf Step 4}: (1) Given the probability of success of mitigation strategies in CPS System at step $S$ : {\tt prob\_of\_state(S)}. (2) At step $S$, an action $a$ is executed ({\tt do(a,S)} holds) and the probability of success of $a$ is {\tt prob\_success(a)}. So the probability of success of CPS system at step $S + 1$ is:
+		$$
+			prob\_of\_state(S+1) = 
+			\begin{cases}
+			\dfrac{prob\_of\_state(S)*prob\_success(a)}{100}, \\ \text{ if } prob\_success(a) \neq None \\
+			prob\_of\_state(S), \text{ if } prob\_success(a) = None 
+			\end{cases} 
+		$$
+		\item {\bf Step 5}: Finally, assume that $S_{last}$ is the last step of system evolution, the value of {\tt prob\_of\_state($S_{last}$)} represents the probability of success of mitigation strategy $\alpha = a_0...a_{S_{last}}$
+	
+	\end{itemize}
+\end{frame}
+%------------------------------------------------
+
+%----------------------------------------------------------------------------------------
+%\bibliographystyle{aaai}
+
+%\begin{thebibliography}{}
+
+%\bibitem[\protect\citeauthoryear{Berners-Lee, Hendler, and
+%                Lassila}{2001}]{lee01a}
+%        Berners-Lee, T.; Hendler, J.; and Lassila, O. 2001. {The Semantics Web.} {\em Scientific American} 284(5):34--43.
+        
+%\end{thebibliography}
+\end{document} 

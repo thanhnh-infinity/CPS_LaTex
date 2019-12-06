@@ -1,0 +1,269 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass{beamer}
+
+\mode<presentation> {
+
+% The Beamer class comes with a number of default slide themes
+% which change the colors and layouts of slides. Below this is a list
+% of all the themes, uncomment each in turn to see what they look like.
+
+%\usetheme{default}
+%\usetheme{AnnArbor}
+%\usetheme{Antibes}
+%\usetheme{Bergen}
+%\usetheme{Berkeley}
+%\usetheme{Berlin}
+%\usetheme{Boadilla}
+%\usetheme{CambridgeUS}
+%\usetheme{Copenhagen}
+%\usetheme{Darmstadt}
+%\usetheme{Dresden}
+%\usetheme{Frankfurt}
+%\usetheme{Goettingen}
+%\usetheme{Hannover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+\usetheme{Madrid}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+%\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+
+% As well as themes, the Beamer class has a number of color themes
+% for any slide theme. Uncomment each of these in turn to see how it
+% changes the colors of your current slide theme.
+
+%\usecolortheme{albatross}
+%\usecolortheme{beaver}
+%\usecolortheme{beetle}
+%\usecolortheme{crane}
+%\usecolortheme{dolphin}
+%\usecolortheme{dove}
+%\usecolortheme{fly}
+%\usecolortheme{lily}
+%\usecolortheme{orchid}
+%\usecolortheme{rose}
+%\usecolortheme{seagull}
+%\usecolortheme{seahorse}
+%\usecolortheme{whale}
+%\usecolortheme{wolverine}
+
+%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
+%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+
+%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+}
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{listings}
+\lstdefinelanguage{clingo}{
+  keywordstyle=[1]\usefont{OT1}{cmtt}{m}{n},%
+  keywordstyle=[2]\textbf,%
+  keywordstyle=[3]\usefont{OT1}{cmtt}{m}{n},%\textit
+  alsoletter={\#,\&},%
+  keywords=[1]{not,from,import,exists,if,else,return,while,break,and,or,for,in,del,and,class,subclass,operation,has_input,has_output,input_spec,output_spec,init,occ,map,score,failed,succ,type},%
+  keywords=[2]{\#const,\#show,\#minimize,\#base,\#theory,\#count,\#external,\#program,\#script,\#end,\#heuristic,\#edge,\#project,\#show},%
+  keywords=[3]{&,&dom,&sum,&diff,&show,&minimize},%
+  morecomment=[l]{\#\ },%
+  morecomment=[l]{\%\ },%
+  commentstyle={\color{darkgray}}%
+}
+\lstset{numberblanklines=false,basicstyle=\ttfamily\small,language=clingo}
+\lstset{escapeinside={*@}{@*}}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[Truthworthiness value]{Computing Trustworthiness value of all components in physical CPS System} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\author{Thanh H. Nguyen} % Your name
+\institute[NMSU] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+New Mexico State University \\ % Your institution for the title page
+\medskip
+\textit{tnguyen@cs.nmsu.edu} % Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+% Slide 1:
+
+%\begin{frame}
+%\frametitle{Overview} % Table of contents slide, comment this block out to remove it
+%\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+%\end{frame}
+
+%----------------------------------------------------------------------------------------
+%	PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+%------------------------------------------------
+\section{Introduction} 
+
+\begin{frame}
+	\frametitle{Physical CPS System}
+	\begin{definition}
+		\label{def:physical_CPS_system} 
+		A physical CPS system $S$ is a tuple ($C, A, F, R$) where:
+		%
+		\begin{list}{$\bullet$}{\itemsep=0pt \parsep=1pt \topsep=1pt \leftmargin=12pt} 
+			\item $C$ is a set of physical components.
+			\item $A$ is a finite set of actions that can be execute over CPS system.
+			\item $F$ is a finite set of fluent literals.
+			\item $R$ is a set of relations that map each physical component $c \in C$ with a set of physical component properties that are defined in CPS Ontology.  \\
+			For any $r \in R$, $r : C \longrightarrow 2^{P}$. $P$ is set of all properties that are defined in CPS ontology. \\
+			For each relation $r \in R$ is encoded by {\tt relation(C1,P1)} which denotes that component $C1 \in C$ is related with property $P1 \in P$.
+		\end{list}
+		%
+	\end{definition}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Representation the System}
+	\begin{itemize}
+		\item {\bf Step 1}: Representation of concerns, properties and their relations from CPS Ontology for Trustworthiness aspect by predicates {\tt concern/1}, {\tt property/1}, {\tt subconcern/2}, {\tt addressedBy/2}. Represent the observation of CPS initial state (TW aspect) by {\tt obs(p,true/false)}
+		\item {\bf Step 2}: Representation the property $p$ in the initial state of CPS that {\tt holds(p,0)} holds $if$ {\tt obs(p,true)} and {\tt $\neg$holds(p,0)} holds $if$ {\tt obs(p,false)}
+		\item {\bf Step 3}: Representation of Physical CPS System of component, relations between components and properties by {\tt component/1}, {\tt relation/2}.
+		\item {\bf Step 4-1}: Reasoning that a component $c \in C$ has $good$ property $p \in P$ at step S of evolution by predicate {\tt compTrueProp(c,p,S)} if {\tt holds(p,S)} holds at step S and there exists a relation between c and p (relation(c,p) holds). 	   
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Reasoning good/bad property holding}
+	\begin{itemize}
+		\item {\bf Step 4-2}: Reasoning that a component $c \in C$ has $bad$ property $p \in P$ at step S of evolution by predicate {\tt compFalseProp(c,p,S)} if {\tt $\neg$holds(p,S)} holds at step S and there exists a relation between c and p (relation(c,p) holds)
+		\item {\bf Step 5}: Compute the value {\tt tw\_property(p)} of property p -- the trustworthiness value of property $p$. {\tt tw\_property(p)} = total number of links to the concerns that are addressed by and related to property p (that includes \# of links to concerns that are directly addressed by p and the \# of links to ancestors of these concerns and higher in concern-tree)
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Compute Good/bad Truthworthiness Value of component c}
+	\begin{itemize}
+		\item {\bf Step 6}: For each component $c \in C$, assuming that $\{p_1,...,p_n\}$ is a set of properties such that {\tt compTrueProp(c,$p_i$,S)} holds at step S of evolution for any $i \in [1,n]$. \\ 
+		The $good$ trustworthiness value of component $c$ at step S will be computed by :\\
+		$tw\_comp(c,good) = \sum_{i=1}^{n}tw\_property(p_i)$
+		\item {\bf Step 7}: For each component $c \in C$, assuming that $\{p'_1,...,p'_m\}$ is a set of properties such that {\tt compFalseProp(c,$p'_i$,S)} holds at step S of evolution for any $i \in [1,m]$. \\ 
+		The $bad$ trustworthiness value of component $c$ at step S will be computed by :\\
+		$tw\_comp(c,bad) = \sum_{i=1}^{m}tw\_property(p'_i)$    
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Comparison TW value of components}
+	%\begin{itemize}
+		{\bf Step 8 - Solution 1}: For each pair components $c_1, c_2 \in C$ at step S of evolution, the trustworthiness value comparison between $c_1$ and $c_2$ is:
+		\begin{itemize}
+			\item If $tw\_comp(c_1,good) > tw\_comp(c_2,good)$ then:
+			\begin{itemize}
+				\item If $tw\_comp(c_1,bad) \leq tw\_comp(c_2,bad)$ then: the trustworthiness value of $c_1$ is {\bf higher} than of $c_2$
+				\item If $tw\_comp(c_1,bad) > tw\_comp(c_2,bad)$ then:
+				\begin{itemize}
+					\item Compute $d_{good} = tw\_comp(c_1,good) - tw\_comp(c_2,good)$
+					\item Compute $d_{bad} = tw\_comp(c_1,bad) - tw\_comp(c_2,bad)$
+					\item if $d_{good} > d_{bad}$ then TW value of $c_1$ is {\bf higher} than of $c_2$
+					\item if $d_{good} = d_{bad}$ then they are equal.
+					\item else TW value of $c_1$ is {\bf less} than of $c_2$
+				\end{itemize}		
+			\end{itemize}
+			\item If $tw\_comp(c_1,good) = tw\_comp(c_2,good)$ then:
+			\begin{itemize}
+				\item If $tw\_comp(c_1,bad) > tw\_comp(c_2,bad)$ then: the truthworthiness value of $c_2$ is {\bf higher} than of $c_1$
+				\item If $tw\_comp(c_1,bad) < tw\_comp(c_2,bad)$ then: the trustworthiness value of $c_1$ is {\bf higher} than of $c_2$ 	
+				\item else they are equal.
+			\end{itemize}
+		\end{itemize}
+	%\end{itemize}
+\end{frame}
+
+
+%\begin{frame}[fragile]
+%	\frametitle{Comparison TW value of components}
+%	{\bf Step 8 - Solution 2}: Another writing for Step 8:
+%	\begin{itemize}
+%		\item Compute $d_{good}(c_1,c_2) = tw\_comp(c_1,good) - tw\_comp(c_2,good)$
+%		\item Compute $d_{bad}(c_1,c_2) = tw\_comp(c_1,bad) - tw\_comp(c_2,bad)$ 
+%		\item If $d_{good}(c_1,c_2) > 0$ then:
+%		\begin{itemize}
+%			\item If $d_{bad}(c_1,c_2) \leq 0$ then: the trustworthiness value of $c_1$ is {\bf higher} the of $c_2$
+%			\item If $d_{bad}(c_1,c_2) > 0$ then:
+%			\begin{itemize}
+%				\item if $d_{good}(c_1,c_2) > d_{bad}(c_1,c_2)$ then TW value of $c_1$ is {\bf higher} than of $c_2$
+%				\item if $d_{good}(c_1,c_2) = d_{bad}(c_1,c_2)$ then they are equal.
+%				\item else TW value of $c_1$ is {\bf less} than of $c_2$
+%			\end{itemize}		
+%		\end{itemize}
+%		\item If $d_{good}(c_1,c_2) = 0$ then:
+%		\begin{itemize}
+%			\item If $d_{bad}(c_1,c_2) > 0)$ then: the truthworthiness value of $c_2$ is {\bf higher} the of $c_1$
+%			\item If $d_{bad}(c_1,c_2) < 0)$ then: the trustworthiness value of $c_1$ is {\bf higher} the of $c_2$ 	
+%			\item else they are equal.
+%		\end{itemize}
+%	\end{itemize}
+%\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Select the component with highest TW value}
+	\begin{itemize}
+		\item Step 9: Based on the comparison all pair ($c_1, c_2 \in C$), we can select the component(s) with the highest trustworthiness value in physical CPS system by predicate {\tt highest\_TW\_comp($c_j$)}
+		\item End
+	\end{itemize}
+	
+\end{frame}
+
+%------------------------------------------------
+
+
+
+%\begin{frame}
+%\frametitle{Problems Description}
+%Sed iaculis dapibus gravida. Morbi sed tortor erat, nec interdum arcu. Sed id lorem lectus. Quisque viverra augue id sem ornare non aliquam nibh tristique. Aenean in ligula nisl. Nulla sed tellus ipsum. Donec vestibulum ligula non lorem vulputate fermentum accumsan neque mollis.\\~\\
+
+%Sed diam enim, sagittis nec condimentum sit amet, ullamcorper sit amet libero. Aliquam vel dui orci, a porta odio. Nullam id suscipit ipsum. Aenean lobortis commodo sem, ut commodo leo gravida vitae. Pellentesque vehicula ante iaculis arcu pretium rutrum eget sit amet purus. Integer ornare nulla quis neque ultrices lobortis. Vestibulum ultrices tincidunt libero, quis commodo erat ullamcorper id.
+%\end{frame}
+
+
+%------------------------------------------------
+
+%----------------------------------------------------------------------------------------
+%\bibliographystyle{aaai}
+
+%\begin{thebibliography}{}
+
+%\bibitem[\protect\citeauthoryear{Berners-Lee, Hendler, and
+%                Lassila}{2001}]{lee01a}
+%        Berners-Lee, T.; Hendler, J.; and Lassila, O. 2001. {The Semantics Web.} {\em Scientific American} 284(5):34--43.
+        
+%\end{thebibliography}
+\end{document} 

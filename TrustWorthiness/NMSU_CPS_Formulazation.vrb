@@ -1,0 +1,6 @@
+\frametitle{Select the component with highest TW value}
+	\begin{itemize}
+		\item Step 9: Based on the comparison all pair ($c_1, c_2 \in C$), we can select the component(s) with the highest trustworthiness value in physical CPS system by predicate {\tt highest\_TW\_comp($c_j$)}
+		\item End
+	\end{itemize}
+

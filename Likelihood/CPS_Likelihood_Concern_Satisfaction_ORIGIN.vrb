@@ -1,0 +1,21 @@
+\frametitle{Reasoning Likelihood of concern satisfaction}
+	\begin{itemize}
+		\item {\bf Step 6:}  Recursively compute likelihood of subconcerns satisfaction.
+		$
+		lh\_sat\_sub(c,S) =
+		\begin{cases}
+		lh\_sat\_sub\_aux(c,S), \text{ if } c \text{ has sub-concerns } \\
+		100, \text{ if } c \text{ has no any sub-concerns}
+		\end{cases}
+		$
+		\\
+		In which, $lh\_sat\_sub\_aux(c,S)$ is the likelihood of satisfaction of biggest sibling concern among the subconcerns of concern $c$.
+		\item {\bf Step 7:} Compute $lh\_sat\_sub\_aux(c,S)$
+		$$
+		lh\_sat\_sub\_aux(c,S) =
+		\begin{cases}
+		lh\_sat\_sub\_aux(c,S), \text{ if } c \text{ has sub-concerns } \\
+		100, \text{ if } c \text{ has no any sub-concerns}
+		\end{cases}
+		$$
+	\end{itemize}
