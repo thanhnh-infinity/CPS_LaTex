@@ -137,15 +137,15 @@ New Mexico State University \\ % Your institution for the title page
 	\frametitle{Physical CPS System}
 	\begin{definition}
 		\label{def:physical_CPS_system} 
-		A physical CPS system $S$ is a tuple ($C, A, F, R, Prob$) where:
+		A physical CPS system $S$ is a tuple ($C, A_p, F, R, Prob$) where:
 		%
 		\begin{list}{$\bullet$}{\itemsep=0pt \parsep=1pt \topsep=1pt \leftmargin=12pt} 
 			\item $C$ is a set of physical components.
-			\item $A$ is a finite set of actions that can be execute over CPS system.
+			\item $A_p$ is a set of tuples $(a, prob_a)$, where $a$ is an action that can be execute over CPS system, and $prob_a$ is the probability of success of action $a$. ($0 \leq prob \leq 100$) or $prob_a = None$ if the probability of success of action a is unknown.
 			\item $F$ is a finite set of fluent literals.
 			\item $R$ is a set of relations that map each physical component $c \in C$ with a set of physical component properties that are defined in CPS Ontology.  \\
 			For any $r \in R$, $r : C \longrightarrow 2^{P}$. $P$ is set of all properties that are defined in CPS ontology. 
-			\item $Pr$ is a set of probabilities of success of actions. Given an action $a \in A$, there is a probability of success of action $a$ denoted by $prob(a) \in Prob$. The value of $prob(a)$ can be $None$ if the probability of success of $a$ is unknown. $Prob = \{prob(a) | a \in A\}$			 
+			%\item $Pr$ is a set of probabilities of success of actions. Given an action $a \in A$, there is a probability of success of action $a$ denoted by $prob(a) \in Prob$. The value of $prob(a)$ can be $None$ if the probability of success of $a$ is unknown. $Prob = \{prob(a) | a \in A\}$			 
 		\end{list}
 		%
 	\end{definition}
