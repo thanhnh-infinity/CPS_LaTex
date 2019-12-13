@@ -4,7 +4,7 @@
 
 1. "Trustworthiness" has a very specific meaning in the CPS framework. There is a TW aspect with various concerns. I thought you meant to focus on the TW aspect alone (vs. other aspects, such as Functional), but I see from the slides that the approach is completely general, in that tw_comp/2 is applied to all concerns. We should either focus the entire algorithm to trustworthiness or replace the current references to trustworthiness with something else. I believe "assurance" may be a good fit (look it up in the description of the CPS Framework published by NIST) -- Ed what do you think? (need to discuss)
 
-2.The term is so overloaded that it may get confusing in the context of this paper. Perhaps we can call them "requirements", which is also used by NIST and is a term we have begun using more and more frequently. Or maybe "CPS property" or similar. (need to discuss)
+2.The term is so overloaded that it may get confusing in the context of this paper. Perhaps we can call them "requirements", which is also used by NIST and is a term we have begun using more and more frequently. Or maybe "CPS property" or similar. (need to discuss---need to ask Dr Son)
 
 3. At step 8, I am wondering if one should take into account the hierarchy of concerns and how one concern's satisfaction affects the satisfaction of its parent concern. (need to discuss)
 
