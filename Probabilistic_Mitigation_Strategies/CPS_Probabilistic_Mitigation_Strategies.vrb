@@ -1,0 +1,13 @@
+\frametitle{Compute the Probability of success of mitigation strategies}
+	\begin{itemize}
+		\item {\bf Step 4}: (1) Given the probability of success of mitigation strategies in CPS System at step $S$ : {\tt prob\_of\_state(S)}. (2) At step $S$, an action $a$ is executed ({\tt do(a,S)} holds) and the probability of success of $a$ is {\tt prob\_success(a)}. So the probability of success of CPS system at step $S + 1$ is:
+		$$
+			prob\_of\_state(S+1) =
+			\begin{cases}
+			\dfrac{prob\_of\_state(S)*prob\_success(a)}{100}, \\ \text{ if } prob\_success(a) \neq None \\
+			prob\_of\_state(S), \text{ if } prob\_success(a) = None
+			\end{cases}
+		$$
+		\item {\bf Step 5}: Finally, assume that $S_{last}$ is the last step of system evolution, the value of {\tt prob\_of\_state($S_{last}$)} represents the probability of success of mitigation strategy $\alpha = a_0...a_{S_{last}}$
+
+	\end{itemize}
