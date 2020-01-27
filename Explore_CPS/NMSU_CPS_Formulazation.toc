@@ -1,4 +1,0 @@
-\beamer@sectionintoc {1}{Issue 1: Complicated Relations between Properties and Concerns}{3}{0}{1}
-\beamer@sectionintoc {2}{Issue 2: The Conflicts between Properties}{6}{0}{2}
-\beamer@sectionintoc {3}{Issue 3: Timing Constraits}{8}{0}{3}
-\beamer@sectionintoc {4}{Issue 4: More Advanced Trustworthiness Queries}{10}{0}{4}

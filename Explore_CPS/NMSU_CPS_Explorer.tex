@@ -101,7 +101,7 @@
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
 
-\title[Truthworthiness value]{Exploring current issues in CPS Theory ($\mathcal{S},I$)} % The short title appears at the bottom of every slide, the full title is only on the title page
+\title[Truthworthiness value]{Exploring current problems in CPS Theory ($\mathcal{S},I$)} % The short title appears at the bottom of every slide, the full title is only on the title page
 
 \author{Thanh H. Nguyen} % Your name
 \institute[NMSU] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
@@ -130,31 +130,31 @@ New Mexico State University \\ % Your institution for the title page
 %----------------------------------------------------------------------------------------
 
 %------------------------------------------------
-\section{Issue 1: Complicated Relations between Properties and Concerns} 
+\section{Problem 1: Complicated Relations between Properties and Concerns} 
 \begin{frame}
-	\frametitle{Issue 1: Problem Description}
+	\frametitle{Problem 1: Problem Description}
 	\begin{itemize}
 		\item In CPS theory, there are 2 most important relations between $concern$ and $property$: $addBy(C,P)$ and $subconcern(C,C_1)$
 		\item A concern C is satisfied iff {\bf all sub-concerns of C} are satisfied AND {\bf all properties that address for C} are satisfied.
-		\item However, there exists a case that: $\exists p_1,p_2 \in P, c \in C$ and $addBy(c,p_1) \land addBy(c,p_2)$ and $c$ has no sub-concerns, $sat(c)$ holds if $sat(p_1) \lor sat(p_2)$ holds.
+		\item However, there exists a case that: $\exists p_1,p_2 \in P, c \in C$ and $addBy(c,p_1) \land addBy(c,p_2)$ (Assume that $c$ has no sub-concerns), $sat(c)$ holds if $sat(p_1) \lor sat(p_2)$ holds.
 		\item Example, properties \{$two\_factos\_auth, finger\_printing\_auth$\} address concern $Authorization$.  concern $Authorization$ is satisfied if a physical device uses $two\_factos\_auth$ OR $finger\_printing\_auth$. 
 		\item This idea is not appropriate with current CPS Theory.
 	\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
-	\frametitle{Issue 1: Solution -- Extend CPS Ontology}
+	\frametitle{Problem 1: Solution -- Extend CPS Ontology}
 	\begin{itemize}
 		\item We propose new terminology: $Supplementary$ $Property$ (SP)
 		\item We propose new relation between $Supplementary$ $Property$ and $Property$: $supportFor(SP,P)$ denotes that supplementary property $SP$ supports for property $P$.
 		\item A property $P$ is satisfied IFF the truth value of $P$ is $true$ OR one of supplementary properties of $P$ is True. \\
-		{\tt holds(sat(P),S) :- holds(sat(SP),S), supportFor(SP,P).}
+		{\tt holds(sat(P),S):- 1\{holds(sat(SP),S):supportFor(SP,P)\}.}
 		\item In CPS theory ($\mathcal{S},I$). The relation $r \in R$ denotes the relation between a component $c$ and a set of supplementary properties $sp$. The predicate $relation(c,sp)$ denotes that component $c$ is related with supplementary property $sp$.  
 	\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
-	\frametitle{Issue 1: Changes in Planning Engine}
+	\frametitle{Problem 1: Changes in Planning Engine}
 	\begin{itemize}
 		\item The extension of CPS Ontology will support to improve the reasoning and the mitigation strategies generation.
 		\item The CPS action is not only able to turn ON/OFF the supplementary property (make the truth values of these properties True or False), but also is able to switch component to use authentication function between \{$two\_factors\_auth$ and $finger\_printing\_auth$\}.
@@ -163,45 +163,101 @@ New Mexico State University \\ % Your institution for the title page
 \end{frame}
 
 %------------------------------------------------
-\section{Issue 2: The Conflicts between Properties} 
-\begin{frame}
-	\frametitle{Issue 2: Problem Description}
+\section{Problem 2: The Conflicts between Properties} 
+\begin{frame}[fragile]
+	\frametitle{Problem 2: The Conflicts between Properties}
 	\begin{itemize}
-		\item We 	   
+		\item Assuming that, in CPS Theory $\exists p_1, p_2 \in P$, $\exists c_1, c_2 \in C$, $relation(c_1,p_1), relation(c_2,p_2) \in R$, $obs(p_1,true)$ and $obs(p_2,true)$.
+		\item There exists a case that $p_1$ and $p_2$ are not able to hold at the same CPS state. \\
+		{\tt CONFLICT :- holds(sat($p_1$),S), holds(sat($p_2$),S).} \\
+		etc.
+		\item This situation causes the conflicts between properties in a state of CPS evolution.
+		\item {\bf Example 1}: In autonomous car, a sensor uses socket connection to transfer data --- assume that socket is unique connection to be able to ensure $Integrity$ concern. But socket connection is not secure and does not ensure the $Encryption$ concern. \\
+		{\tt CONFLICT :- holds(use(sensor,socket\_conn),S), holds(use(sensor,protocol\_encrypted),S).}   	
 	\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
-	\frametitle{Issue 2: Solution -- Likelihood of Concern Satisfaction}
+	\frametitle{Problem 2: Solution }
 	\begin{itemize}
-		\item We 	   
+		\item I am still working on the solution for this issue 	   
 	\end{itemize}
 \end{frame}
 
-
 %------------------------------------------------
-\section{Issue 3: Timing Constraits} 
-\begin{frame}
-	\frametitle{Issue 3: Problem Description}
+\section{Problem 3: Evaluate the performance and effectiveness of current CPS Configuration} 
+\begin{frame}[fragile]
+	\frametitle{Problem 3: Evaluate the performance and effectiveness of current CPS Configuration}
 	\begin{itemize}
-		\item We 	   
+		\item There exists a problem to evaluate the effectiveness and performance of different CPS configurations. Assuming that, these configurations make all related concerns are satisfied. But which configuration is better or worse than the others ?  
+		\item {\bf Example 2}: LKAS system with components $C = \{SAM,CAM,Battery\}$. LKAS works perfectly if $SAM$ and $CAM$ in $advanced\_mode$, but it causes $Battery$ working on $low\_mode$ (not working normally -- negative) because component in $advanced\_mode$ consumes a lot of energy. If one of $SAM,CAM$ works on $basic\_mode$ then $Battery$ will works in $normal\_mode$. If all components in $basic\_mode$, $Battery$ will be $power\_mode$. At least 3 configurations. \\	
+		{\tt holds(use(battery,low\_mode),S) :- 2\{holds(use(X,advanced\_mode), S) : component(X)\}.} \\
+		(static causal laws)
 	\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
-	\frametitle{Issue 3: Solution}
+	\frametitle{Problem 3: Solution -- Likelihood of Satisfaction (Different from Dr Marcello's idea)}
 	\begin{itemize}
-		\item We 	   
+		\item In this issue, we need a value to measure how much satisfaction of related concerns. For example, in 3 above configurations, $Integrity$ concern is satisfied but how much satisfy of $Integrity$ for each configuration.
+		\item Likelihood of Concern Satisfaction can solve this problem (Different from Dr Marcello's idea).
+		\item We assign each property in CPS Theory a value called $sat\_value$.
+		\begin{center}
+			\begin{tabular}{ |c|c| } 
+				\hline
+				advanced\_mode & 0.8  \\ 
+				basic\_mode & 0.6  \\
+				\hline
+				power\_mode & 0.9  \\ 
+				normal\_mode & 0.5  \\
+				low\_mode & 0.2  \\
+				\hline
+			\end{tabular}
+		\end{center}
+		\item We calculate the likelihood of concern satisfaction based on the likelihood of concern satisfaction of sub-concerns AND $sat\_value$ of properties which address this concern.	
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Problem 3: Solution -- Likelihood of Satisfaction (Different from Dr Marcello's idea)}
+	\begin{itemize}
+		\item For example in above configurations, assume that all properties address $Integrity$ concern and the current configuration is that: $SAM,CAM$ are in $advanced\_mode$, $Battery$ is $low\_mode$, then $likelihood\_sat(Integrity) = 0.8*0.8*0.2 = 0.128$ (Assume that $Integrity$ hasn't had any sub-concerns)
+		\item $Integrity$ and $Confidentiality$ are sub-concerns of $Cyber\_security$ then $likelihood\_sat(Cyber\_security) = likelihood\_sat(Integrity) * likelihood\_sat(Conf.)$
+		\item By default, all satisfied likelihoods of concerns are 1. 
+		\item We keep recursively calculate $likelihood\_sat$ to the root of concern tree $likelihood\_sat(trustworthiness)$. Comparing the performance and effectiveness of different CPS configurations based on $likelihood\_sat(trustworthiness)$. 	
 	\end{itemize}
 \end{frame}
 
 %------------------------------------------------
-\section{Issue 4: More Advanced Trustworthiness Queries} 
+\section{Problem 4: Timing Constraints} 
+\begin{frame}
+	\frametitle{Problem 4: Timing Constraints}
+	\begin{itemize}
+		\item There are a lot of use cases related to Timing Constraints especially on Autonomous System. 
+		\item For example, in above configuration, if $SAM,CAM$ are in $advanced\_mode$ causes $Battery$ in $low\_mode$. If $Battery$ in $low\_mode$ is over limited time $\delta_t$ (seconds) then the system will be down. \\
+		{\tt SYSTEM\_DOWN :- holds(use(battery,low\_mode),S), starting\_time(use(battery,low\_mode),$@t_0$), current\_time(@t), limit\_in\_low\_mode($\delta_t$), $@t - @t_0 > \delta_t$.}
+		\item In order to prevent SYSTEM\_DOWN, starting from time $@t_0$, a mitigation strategy has to be generated to fix the problem. The constraint is that the total effect time of plan execution CANNOT be over $\delta_t$. Total effect time is calculated from start executing the first action to getting the effects of last action in plan. 
+		\item In addition, an action taken at time point $@t$ can have its effects at $@t$ or a later time points after $@t$. (Temporal Planning) 
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Problem 4: Formalization and Implementation}
+	\begin{itemize}
+		\item I am still working on this part. 	   
+	\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\section{Problem 4: More Advanced Trustworthiness Queries} 
 \begin{frame}
 	\frametitle{More Advanced Trustworthiness Queries}
 	\begin{itemize}
-		\item We 	   
-	\end{itemize}
+		\item What are the robustness requirements/properties ? (Preventing a fault)
+		\item What are the resiliency requirements/properties ? (Recovering from a fault or sub-fault) 
+		\item  What happens if information within the system leaks? \\
+		 In this case, property $p$ is still True to make the addressed concerns satisfiable. However, the information still leaks. Need to change to another property $p'$ which \emph{higher} than $p$. We need to define and reason about \emph{higher} property.
+ 	\end{itemize}
 \end{frame}
 
 
