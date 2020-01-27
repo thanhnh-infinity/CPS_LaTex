@@ -1,0 +1,218 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass{beamer}
+
+\mode<presentation> {
+
+% The Beamer class comes with a number of default slide themes
+% which change the colors and layouts of slides. Below this is a list
+% of all the themes, uncomment each in turn to see what they look like.
+
+%\usetheme{default}
+%\usetheme{AnnArbor}
+%\usetheme{Antibes}
+%\usetheme{Bergen}
+%\usetheme{Berkeley}
+%\usetheme{Berlin}
+%\usetheme{Boadilla}
+%\usetheme{CambridgeUS}
+%\usetheme{Copenhagen}
+%\usetheme{Darmstadt}
+%\usetheme{Dresden}
+%\usetheme{Frankfurt}
+%\usetheme{Goettingen}
+%\usetheme{Hannover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+\usetheme{Madrid}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+%\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+
+% As well as themes, the Beamer class has a number of color themes
+% for any slide theme. Uncomment each of these in turn to see how it
+% changes the colors of your current slide theme.
+
+%\usecolortheme{albatross}
+%\usecolortheme{beaver}
+%\usecolortheme{beetle}
+%\usecolortheme{crane}
+%\usecolortheme{dolphin}
+%\usecolortheme{dove}
+%\usecolortheme{fly}
+%\usecolortheme{lily}
+%\usecolortheme{orchid}
+%\usecolortheme{rose}
+%\usecolortheme{seagull}
+%\usecolortheme{seahorse}
+%\usecolortheme{whale}
+%\usecolortheme{wolverine}
+
+%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
+%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+
+%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+}
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{listings}
+\lstdefinelanguage{clingo}{
+  keywordstyle=[1]\usefont{OT1}{cmtt}{m}{n},%
+  keywordstyle=[2]\textbf,%
+  keywordstyle=[3]\usefont{OT1}{cmtt}{m}{n},%\textit
+  alsoletter={\#,\&},%
+  keywords=[1]{not,from,import,exists,if,else,return,while,break,and,or,for,in,del,and,class,subclass,operation,has_input,has_output,input_spec,output_spec,init,occ,map,score,failed,succ,type},%
+  keywords=[2]{\#const,\#show,\#minimize,\#base,\#theory,\#count,\#external,\#program,\#script,\#end,\#heuristic,\#edge,\#project,\#show},%
+  keywords=[3]{&,&dom,&sum,&diff,&show,&minimize},%
+  morecomment=[l]{\#\ },%
+  morecomment=[l]{\%\ },%
+  commentstyle={\color{darkgray}}%
+}
+\lstset{numberblanklines=false,basicstyle=\ttfamily\small,language=clingo}
+\lstset{escapeinside={*@}{@*}}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[Truthworthiness value]{Exploring current issues in CPS Theory ($\mathcal{S},I$)} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\author{Thanh H. Nguyen} % Your name
+\institute[NMSU] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+New Mexico State University \\ % Your institution for the title page
+\medskip
+\textit{tnguyen@cs.nmsu.edu} % Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+% Slide 1:
+
+\begin{frame}
+\frametitle{Overview} % Table of contents slide, comment this block out to remove it
+\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%	PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+%------------------------------------------------
+\section{Issue 1: Complicated Relations between Properties and Concerns} 
+\begin{frame}
+	\frametitle{Issue 1: Problem Description}
+	\begin{itemize}
+		\item In CPS theory, there are 2 most important relations between $concern$ and $property$: $addBy(C,P)$ and $subconcern(C,C_1)$
+		\item A concern C is satisfied iff {\bf all sub-concerns of C} are satisfied AND {\bf all properties that address for C} are satisfied.
+		\item However, there exists a case that: $\exists p_1,p_2 \in P, c \in C$ and $addBy(c,p_1) \land addBy(c,p_2)$ and $c$ has no sub-concerns, $sat(c)$ holds if $sat(p_1) \lor sat(p_2)$ holds.
+		\item Example, properties \{$two\_factos\_auth, finger\_printing\_auth$\} address concern $Authorization$.  concern $Authorization$ is satisfied if a physical device uses $two\_factos\_auth$ OR $finger\_printing\_auth$. 
+		\item This idea is not appropriate with current CPS Theory.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Issue 1: Solution -- Extend CPS Ontology}
+	\begin{itemize}
+		\item We propose new terminology: $Supplementary$ $Property$ (SP)
+		\item We propose new relation between $Supplementary$ $Property$ and $Property$: $supportFor(SP,P)$ denotes that supplementary property $SP$ supports for property $P$.
+		\item A property $P$ is satisfied IFF the truth value of $P$ is $true$ OR one of supplementary properties of $P$ is True. \\
+		{\tt holds(sat(P),S) :- holds(sat(SP),S), supportFor(SP,P).}
+		\item In CPS theory ($\mathcal{S},I$). The relation $r \in R$ denotes the relation between a component $c$ and a set of supplementary properties $sp$. The predicate $relation(c,sp)$ denotes that component $c$ is related with supplementary property $sp$.  
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Issue 1: Changes in Planning Engine}
+	\begin{itemize}
+		\item The extension of CPS Ontology will support to improve the reasoning and the mitigation strategies generation.
+		\item The CPS action is not only able to turn ON/OFF the supplementary property (make the truth values of these properties True or False), but also is able to switch component to use authentication function between \{$two\_factors\_auth$ and $finger\_printing\_auth$\}.
+		\item Generate the more powerful mitigation strategies (multiple types of actions which changes truth value of supplementary property AND changes the relation between component and supplementary properties). 	   
+	\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\section{Issue 2: The Conflicts between Properties} 
+\begin{frame}
+	\frametitle{Issue 2: Problem Description}
+	\begin{itemize}
+		\item We 	   
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Issue 2: Solution -- Likelihood of Concern Satisfaction}
+	\begin{itemize}
+		\item We 	   
+	\end{itemize}
+\end{frame}
+
+
+%------------------------------------------------
+\section{Issue 3: Timing Constraits} 
+\begin{frame}
+	\frametitle{Issue 3: Problem Description}
+	\begin{itemize}
+		\item We 	   
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Issue 3: Solution}
+	\begin{itemize}
+		\item We 	   
+	\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\section{Issue 4: More Advanced Trustworthiness Queries} 
+\begin{frame}
+	\frametitle{More Advanced Trustworthiness Queries}
+	\begin{itemize}
+		\item We 	   
+	\end{itemize}
+\end{frame}
+
+
+%----------------------------------------------------------------------------------------
+%\bibliographystyle{aaai}
+
+%\begin{thebibliography}{}
+
+%\bibitem[\protect\citeauthoryear{Berners-Lee, Hendler, and
+%                Lassila}{2001}]{lee01a}
+%        Berners-Lee, T.; Hendler, J.; and Lassila, O. 2001. {The Semantics Web.} {\em Scientific American} 284(5):34--43.
+        
+%\end{thebibliography}
+\end{document} 
